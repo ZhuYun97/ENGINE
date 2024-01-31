@@ -6,7 +6,7 @@ Yun Zhu*, Yaoke Wang*, Haizhou Shi, Siliang Tang†
 
 Under Review
 
-> This repository is still under working.
+> This repository is still on progress.
 
 ## Overview
 In this paper, we propose ENGINE, a *parameter- and memory-efficient fine-tuning method* for textual graphs with LLM encoder as depicted in Figure 2(Right). The key insight is to combine the LLMs and GNNs through a *tunable side structure*, which significantly reduces the training complexity without impairing the joint model's capacity.
