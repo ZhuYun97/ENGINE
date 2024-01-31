@@ -19,13 +19,13 @@
 
 download datasets with raw text in [https://github.com/XiaoxinHe/TAPE](https://github.com/XiaoxinHe/TAPE) and put them into `datasets` dir.
 
-# Runing Commonds
+# Runing Commands
 
-## Baselines for Traditional GNNs
+### Baselines for Traditional GNNs
 
-### GNN
 
 ```
+# GNN
 
 CUDA_VISIBLE_DEVICES=5 python baselines.py --config ./configs/cora/gnn.yaml
 
@@ -33,9 +33,9 @@ CUDA_VISIBLE_DEVICES=5 python baselines.py --config ./configs/<dataset>/gnn.yaml
 
 ```
 
-### GNN+Subsampling
 
 ```
+# GNN+Subsampling
 
 CUDA_VISIBLE_DEVICES=5 python baselines.py --config ./configs/cora/subgnn.yaml
 
