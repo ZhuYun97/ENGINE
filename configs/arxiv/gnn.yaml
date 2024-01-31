@@ -1,0 +1,15 @@
+dataset: ogbn-arxiv
+# model
+hidden_size: 256
+layer_num: 2
+activation: relu
+dropout: 0.5
+model: GNN
+encoder: GAT_Encoder
+norm: bn
+# training
+lr: 0.001
+weight_decay: 0.0005
+epochs: 200
+earlystop: False
+patience: 20

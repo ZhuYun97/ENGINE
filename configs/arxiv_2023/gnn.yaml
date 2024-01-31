@@ -1,0 +1,15 @@
+dataset: arxiv_2023
+# model
+hidden_size: 128
+layer_num: 2
+activation: relu
+dropout: 0.0
+model: GNN
+encoder: GCN_Encoder
+norm: id
+# training
+lr: 0.001
+weight_decay: 0.0005
+epochs: 200
+earlystop: True
+patience: 20

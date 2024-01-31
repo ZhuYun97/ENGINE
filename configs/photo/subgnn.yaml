@@ -1,0 +1,19 @@
+dataset: photo
+# model
+hidden_size: 128
+layer_num: 2
+activation: relu
+dropout: 0.5
+model: GNN
+encoder: SAGE_Encoder
+# training
+lr: 0.001
+weight_decay: 0.0005
+epochs: 200
+earlystop: True
+patience: 20
+sampler: khop
+# subsampling
+subsampling: True
+restart: 0.5
+

@@ -1,0 +1,19 @@
+dataset: ogbn-arxiv
+# model
+hidden_size: 128
+layer_num: 2
+activation: relu
+dropout: 0.5
+model: GNN
+encoder: GCN_Encoder
+use_bn: True # False
+# training
+lr: 0.0001 # 0.001
+weight_decay: 0.0005
+epochs: 200
+earlystop: True
+patience: 20
+# subsampling
+subsampling: True
+restart: 0.5
+

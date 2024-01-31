@@ -1,0 +1,78 @@
+# Environments
+
+1. virtual environment: `conda create --name llama python=3.9 -y`
+2. install torch (>=2.0.1): `pip install torch==2.0.1+cu117 torchvision==0.15.2+cu117 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu117`
+3. install related packages: `pip install llama-recipes transformers datasets accelerate sentencepiece protobuf==3.20 py7zr scipy peft bitsandbytes fire torch_tb_profiler ipywidgets`
+4. get License for downloading weights: [https://ai.meta.com/resources/models-and-libraries/llama-downloads/](https://ai.meta.com/resources/models-and-libraries/llama-downloads/)
+5. download mode weights：`git clone https://github.com/facebookresearch/llama`
+
+   -`cd llama`
+
+   -`sh download.sh`
+6. change into hugging face format: `python <anaconda path>/envs/llama/lib/python3.9/site-packages/transformers/models/llama/convert_llama_weights_to_hf.py --input_dir <Weights_PATH> --model_size <size> --output_dir <Outout_PATH>`
+
+   -`https://github.com/facebookresearch/llama-recipes#model-conversion-to-hugging-face`
+7. install pyg: `pip install torch_geometric`
+8. Optional dependencies: `pip install torch_scatter torch_sparse`
+
+# Download Datasets
+
+download datasets with raw text in [https://github.com/XiaoxinHe/TAPE](https://github.com/XiaoxinHe/TAPE) and put them into `datasets` dir.
+
+# Runing Commonds
+
+## Baselines for Traditional GNNs
+
+### GNN
+
+```
+
+CUDA_VISIBLE_DEVICES=5 python baselines.py --config ./configs/cora/gnn.yaml
+
+CUDA_VISIBLE_DEVICES=5 python baselines.py --config ./configs/<dataset>/gnn.yaml
+
+```
+
+### GNN+Subsampling
+
+```
+
+CUDA_VISIBLE_DEVICES=5 python baselines.py --config ./configs/cora/subgnn.yaml
+
+CUDA_VISIBLE_DEVICES=5 python baselines.py --config ./configs/pubmed/subgnn.yaml
+
+```
+
+## Baselines for finetuning LMs
+
+```
+
+CUDA_VISIBLE_DEVICES=4 python finetune_lm.py --dataset cora --lm_type bert --epochs 4 --lr 5e-5 --batch_size 6
+
+```
+
+
+## Baselines for PEFT of LLMs
+
+```
+
+CUDA_VISIBLE_DEVICES=4 python llm.py --peft ia3 --dataset cora --lr 1e-2 --epochs 10 --batch_size 16
+
+```
+
+
+## Running commands for our method
+
+generate cache:
+
+```
+python cache.py --dataset citeseer
+```
+
+running ENGINE:
+
+```
+
+CUDA_VISIBLE_DEVICES=3 python main.py --dataset citeseer --norm id --lr 5e-5 --encoder SAGE_Encoder --sampler khop --dropout 0.5 --patience 20 --activation elu --layer_num 1 --weight_decay 5e-4
+
+```

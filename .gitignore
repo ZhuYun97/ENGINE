@@ -1,0 +1,9 @@
+datasets
+llm_cache
+
+# all pyc files_
+**/__pycache__
+
+**/.vscode
+**/ipynb_checkpoints
+*.ipynb
