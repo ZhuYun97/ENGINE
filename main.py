@@ -287,7 +287,11 @@ if __name__ == '__main__':
         
         optimizer = torch.optim.AdamW(params)
         
-        acc = train(train_loader, val_loader, test_loader, xs_list, model_list, prog_list,  alpha_list, exit_list, optimizer)
+        # ENGINE w/ caching
+        if config.early: # Early
+            acc = efficient_train(train_loader, val_loader, test_loader, xs_list, model_list, prog_list, alpha_list, exit_list, optimizer)
+        else: 
+            acc = train(train_loader, val_loader, test_loader, xs_list, model_list, prog_list, alpha_list, exit_list, optimizer)
         print(seed, acc)
         acc_list.append(acc)
         

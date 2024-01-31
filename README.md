@@ -6,6 +6,8 @@ Yun Zhu*, Yaoke Wang*, Haizhou Shi, Siliang Tang†
 
 Under Review
 
+> This repository is still under working.
+
 ## Overview
 In this paper, we propose ENGINE, a *parameter- and memory-efficient fine-tuning method* for textual graphs with LLM encoder as depicted in Figure 2(Right). The key insight is to combine the LLMs and GNNs through a *tunable side structure*, which significantly reduces the training complexity without impairing the joint model's capacity.
 
@@ -83,10 +85,20 @@ generate cache:
 python cache.py --dataset citeseer
 ```
 
-running ENGINE:
+running ENGINE w/ caching:
+
+```
+# For simplicity, we use caching for all samples here. However, in real-world scenarios, access to test samples in advance may not be available. The forthcoming version of this repository, ENGINE w/o caching will be provided. It is imperative to highlight that in Table 4, caching is not utilized.
+
+CUDA_VISIBLE_DEVICES=3 python main.py --dataset citeseer --norm id --lr 5e-5 --encoder SAGE_Encoder --sampler khop --dropout 0.5 --patience 20 --activation elu --layer_num 1 --weight_decay 5e-4
 
 ```
 
-CUDA_VISIBLE_DEVICES=3 python main.py --dataset citeseer --norm id --lr 5e-5 --encoder SAGE_Encoder --sampler khop --dropout 0.5 --patience 20 --activation elu --layer_num 1 --weight_decay 5e-4
+running ENGINE (Early):
+
+```
+# For simplicity, we use caching for all samples here. However, in real-world scenarios, access to test samples in advance may not be available. The forthcoming version of this repository, ENGINE w/o caching will be provided. It is imperative to highlight that in Table 4, caching is not utilized.
+
+CUDA_VISIBLE_DEVICES=3 python main.py --dataset citeseer --norm id --lr 5e-5 --encoder SAGE_Encoder --sampler khop --dropout 0.5 --patience 20 --activation elu --layer_num 1 --weight_decay 5e-4 --early
 
 ```

@@ -50,5 +50,8 @@ class Arguments:
         self.parser.add_argument('--sampler', type=str, help="the choice of sampler, random walk or k-hop sampling", default='rw', 
                                  choices=['rw', 'khop', 'shadow'])
         
+        # dynamic early exit
+        self.parser.add_argument('--early', action='store_true', help="the sign of dynamic early exit")
+        
     def parse_args(self):
         return self.parser.parse_args()
