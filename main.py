@@ -60,7 +60,7 @@ def get_dataloader(data, config):
     return train_loader, val_loader, test_loader
     
 
-def efficient_train(train_loader, val_loader, test_loader, xs, model_list, prog_list,  alpha_list, exit_list, optimizer):
+def efficient_train_eval(train_loader, val_loader, test_loader, xs, model_list, prog_list,  alpha_list, exit_list, optimizer):
     patience = 20
     best_acc = 0
     best_test_from_val = 0
@@ -157,7 +157,7 @@ def efficient_eval(test_loader, xs, model_list, prog_list, alpha_list, exit_list
     # print(f'Accuracy: {acc:.4f}') 
     return acc
 
-def train(train_loader, val_loader, test_loader, xs, model_list, prog_list,  alpha_list, exit_list, optimizer):
+def train_eval(train_loader, val_loader, test_loader, xs, model_list, prog_list,  alpha_list, exit_list, optimizer):
     patience = config.patience # 20
     best_acc = 0
     best_test_from_val = 0
@@ -289,9 +289,9 @@ if __name__ == '__main__':
         
         # ENGINE w/ caching
         if config.early: # Early
-            acc = efficient_train(train_loader, val_loader, test_loader, xs_list, model_list, prog_list, alpha_list, exit_list, optimizer)
+            acc = efficient_train_eval(train_loader, val_loader, test_loader, xs_list, model_list, prog_list, alpha_list, exit_list, optimizer)
         else: 
-            acc = train(train_loader, val_loader, test_loader, xs_list, model_list, prog_list, alpha_list, exit_list, optimizer)
+            acc = train_eval(train_loader, val_loader, test_loader, xs_list, model_list, prog_list, alpha_list, exit_list, optimizer)
         print(seed, acc)
         acc_list.append(acc)
         
