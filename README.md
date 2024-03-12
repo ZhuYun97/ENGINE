@@ -42,9 +42,9 @@ download datasets with raw text in [https://github.com/XiaoxinHe/TAPE](https://g
 ```
 # GNN
 
-CUDA_VISIBLE_DEVICES=5 python baselines.py --config ./configs/cora/gnn.yaml
+CUDA_VISIBLE_DEVICES=5 python traditional_gnn.py --config ./configs/cora/gnn.yaml
 
-CUDA_VISIBLE_DEVICES=5 python baselines.py --config ./configs/<dataset>/gnn.yaml
+CUDA_VISIBLE_DEVICES=5 python traditional_gnn.py --config ./configs/<dataset>/gnn.yaml
 
 ```
 
@@ -52,9 +52,9 @@ CUDA_VISIBLE_DEVICES=5 python baselines.py --config ./configs/<dataset>/gnn.yaml
 ```
 # GNN+Subsampling
 
-CUDA_VISIBLE_DEVICES=5 python baselines.py --config ./configs/cora/subgnn.yaml
+CUDA_VISIBLE_DEVICES=5 python traditional_gnn.py --config ./configs/cora/subgnn.yaml
 
-CUDA_VISIBLE_DEVICES=5 python baselines.py --config ./configs/<dataset>/subgnn.yaml
+CUDA_VISIBLE_DEVICES=5 python traditional_gnn.py --config ./configs/<dataset>/subgnn.yaml
 
 ```
 > `dataset` can be set as `cora`, `citeseer`, `wikics`, `products`, `arxiv`, `arxiv_2023`, `photo`.

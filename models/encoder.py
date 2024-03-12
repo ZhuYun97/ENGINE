@@ -7,7 +7,7 @@ from torch.nn import BatchNorm1d, Identity, LayerNorm
 import torch.nn as nn
 
 from utils.register import register
-from .conv import *
+# from .conv import *
 
 
 def get_activation(name: str):

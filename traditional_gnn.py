@@ -108,7 +108,6 @@ def train_eval(model, optimizer, criterion, config, data, train_loader, val_load
 def main(config):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') 
     acc_list = []
-    # seeds = [3,4,25,  131,148]
     for i in range(5):
         # load data
         data, text, num_classes = load_data(config.dataset, use_text=True, seed=i)

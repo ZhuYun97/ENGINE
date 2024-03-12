@@ -7,7 +7,7 @@ dropout: 0.5
 model: GNN
 encoder: GCN_Encoder
 # training
-lr: 0.0001
+lr: 0.0005
 weight_decay: 0.0005
 epochs: 200
 earlystop: True
