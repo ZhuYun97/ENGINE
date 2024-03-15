@@ -32,6 +32,7 @@ In this paper, we propose ENGINE, a *parameter- and memory-efficient fine-tuning
 
 ## Download Datasets
 
+For `citeseer, wikics, photo` datasets, you can download them from [link](https://drive.google.com/drive/folders/1bSRCZxt0c11A3717DYDjO112fo_zC8Ec?usp=sharing) and put them in `preprocessed_data/new`.
 download datasets with raw text in [https://github.com/XiaoxinHe/TAPE](https://github.com/XiaoxinHe/TAPE) and put them into `datasets` dir.
 
 ## Runing Commands

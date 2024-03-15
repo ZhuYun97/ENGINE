@@ -1,8 +1,10 @@
 from  torch_geometric.data import Data
+from torch_geometric.datasets import Planetoid
 import torch
 import os.path as osp
 import numpy as np
 import random
+import torch_geometric.transforms as T
 
 
 def get_raw_text_citeseer(use_text=False, seed=0):
@@ -30,7 +32,11 @@ def get_raw_text_citeseer(use_text=False, seed=0):
             [x in data.val_id for x in range(data.num_nodes)])
         data.test_mask = torch.tensor(
             [x in data.test_id for x in range(data.num_nodes)])
-
+        # shallow embeddings
+        # dataset = Planetoid('../datasets', 'Citeseer',
+        #                 transform=T.NormalizeFeatures())
+        # print(data.x.shape, dataset[0].x.shape)
+        # data.x = dataset[0].x
         return data, data.raw_texts
     citeseer_path = './raw_data/CiteSeer-Orig',
     data = Data()
