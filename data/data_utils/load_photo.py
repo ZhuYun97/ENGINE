@@ -13,9 +13,6 @@ def get_raw_text_photo(use_text=False, seed=0):
         edge_index = to_undirected(data.edge_index)
         # edge_index, _ = add_self_loops(data.edge_index)
         data.edge_index = edge_index
-        text = pd.read_csv('./datasets/TAG_Benchmark/Photo/Electronics-Photo.txt', sep='\t', header=None)
-        text = text[0]
-        raw_texts = text.tolist()
-        return data, raw_texts
+        return data, data.raw_texts
     else:
         raise NotImplementedError('No existing photo dataset!')
