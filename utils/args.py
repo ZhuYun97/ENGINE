@@ -5,7 +5,7 @@ class Arguments:
         self.parser = argparse.ArgumentParser()
         # self.parser.add_argument('--random_seeds', type=int, help='random seed', default=0)
         # self.parser.add_argument("--seed", type=int, default=0)
-        self.parser.add_argument('--config', type=str, help="the config file", default='./configs/cora/gnn.yaml')
+        self.parser.add_argument('--config', type=str, help="the config file", default='./configs/cora/engine.yaml')
         # Dataset
         self.parser.add_argument('--dataset', type=str, help="dataset name", default='cora')
         

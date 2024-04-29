@@ -4,7 +4,7 @@
 
 Yun Zhu*, Yaoke Wang*, Haizhou Shi, Siliang Tang†
 
-Under Review
+In IJCAI 2024
 
 > This repository is still on progress.
 
@@ -33,7 +33,7 @@ In this paper, we propose ENGINE, a *parameter- and memory-efficient fine-tuning
 ## Download Datasets
 
 For `citeseer, wikics, photo` datasets, you can download them from [link](https://drive.google.com/drive/folders/1bSRCZxt0c11A3717DYDjO112fo_zC8Ec?usp=sharing) and put them in `preprocessed_data/new`.
-download datasets with raw text in [https://github.com/XiaoxinHe/TAPE](https://github.com/XiaoxinHe/TAPE) and put them into `datasets` dir.
+And you can download other datasets with raw text in [https://github.com/XiaoxinHe/TAPE](https://github.com/XiaoxinHe/TAPE) and put them into `datasets` dir.
 
 ## Runing Commands
 
@@ -80,26 +80,26 @@ CUDA_VISIBLE_DEVICES=4 python llm.py --peft ia3 --dataset cora --lr 1e-2 --epoch
 
 ### Running commands for our method
 
-generate cache:
+1. generate cache:
 
 ```
 python cache.py --dataset citeseer
 ```
 
-running ENGINE w/ caching:
+2. running ENGINE w/ caching:
 
 ```
 # For simplicity, we use caching for all samples here. However, in real-world scenarios, access to test samples in advance may not be available. The forthcoming version of this repository, ENGINE w/o caching will be provided. It is imperative to highlight that in Table 4, caching is not utilized.
 
-CUDA_VISIBLE_DEVICES=3 python main.py --dataset citeseer --norm id --lr 5e-5 --encoder SAGE_Encoder --sampler khop --dropout 0.5 --patience 20 --activation elu --layer_num 1 --weight_decay 5e-4
+CUDA_VISIBLE_DEVICES=3 python main.py --config ./configs/citeseer/engine.yaml
 
 ```
 
-running ENGINE (Early):
+2. running ENGINE (Early):
 
 ```
 # For simplicity, we use caching for all samples here. However, in real-world scenarios, access to test samples in advance may not be available. The forthcoming version of this repository, ENGINE w/o caching will be provided. It is imperative to highlight that in Table 4, caching is not utilized.
 
-CUDA_VISIBLE_DEVICES=3 python main.py --dataset citeseer --norm id --lr 5e-5 --encoder SAGE_Encoder --sampler khop --dropout 0.5 --patience 20 --activation elu --layer_num 1 --weight_decay 5e-4 --early
+CUDA_VISIBLE_DEVICES=3 python main.py --config ./configs/citeseer/engine.yaml --early
 
 ```

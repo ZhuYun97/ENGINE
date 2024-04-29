@@ -1,0 +1,22 @@
+dataset: wikics
+# model
+input_dim: 4096
+hidden_size: 64
+layer_num: 1
+activation: relu
+dropout: 0.5
+norm: id
+sampler: khop
+encoder: SAGE_Encoder
+r: 32
+T: 0.1
+layer_select: [0,5,10,15,20,25,-1]
+# training
+lr: 0.001
+weight_decay: 0.0001
+epochs: 200
+earlystop: True
+patience: 20
+seeds: [0,1,2,3,4]
+
+

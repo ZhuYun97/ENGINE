@@ -6,6 +6,8 @@ import math
 from torch_geometric.loader import DataLoader
 from torch_geometric.nn import global_mean_pool, global_max_pool, global_add_pool
 from torch_geometric.utils import to_edge_index
+import yaml 
+from yaml import SafeLoader
 
 from data.load import load_data
 from data.sampling import collect_subgraphs, ego_graphs_sampler
@@ -61,7 +63,7 @@ def get_dataloader(data, config):
     
 
 def efficient_train_eval(train_loader, val_loader, test_loader, xs, model_list, prog_list,  alpha_list, exit_list, optimizer):
-    patience = 20
+    patience = config.patience
     best_acc = 0
     best_test_from_val = 0
     best_state_list = []
@@ -69,7 +71,7 @@ def efficient_train_eval(train_loader, val_loader, test_loader, xs, model_list, 
     
     criterion = torch.nn.CrossEntropyLoss()
     # criterion = LabelSmoothingCrossEntropy(smoothing=0.05)
-    for epoch in tqdm(range(200)):
+    for epoch in tqdm(range(config.epochs)):
         for data in train_loader:
             data = data.to(device)
             optimizer.zero_grad()
@@ -158,7 +160,7 @@ def efficient_eval(test_loader, xs, model_list, prog_list, alpha_list, exit_list
     return acc
 
 def train_eval(train_loader, val_loader, test_loader, xs, model_list, prog_list,  alpha_list, exit_list, optimizer):
-    patience = config.patience # 20
+    patience = config.patience 
     best_acc = 0
     best_test_from_val = 0
     best_state_list = []
@@ -166,7 +168,7 @@ def train_eval(train_loader, val_loader, test_loader, xs, model_list, prog_list,
     
     criterion = torch.nn.CrossEntropyLoss()
     # criterion = LabelSmoothingCrossEntropy(smoothing=0.05)
-    for epoch in tqdm(range(200)):
+    for epoch in tqdm(range(config.epochs)):
         for data in train_loader:
             data = data.to(device)
             optimizer.zero_grad()
@@ -236,29 +238,30 @@ def eval(test_loader, xs, model_list, prog_list,  alpha_list):
 
 if __name__ == '__main__':
     config = Arguments().parse_args()
+    args = yaml.load(open(config.config), Loader=SafeLoader)
+    # combine args and config
+    for k, v in args.items():
+        config.__setattr__(k, v)
     print(config)
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     xs = get_hidden_states(config)
     xs = [x for x in xs]
     acc_list = []
     
-    seeds = [25,131,148,404,353]
-    if config.dataset == 'wikics':
-        seeds = [0,1,2,3,4]
     for seed in range(5):
         # load data
-        data, text, num_classes = load_data(config.dataset, use_text=True, seed=seeds[seed])
+        data, text, num_classes = load_data(config.dataset, use_text=True, seed=config.seeds[seed])
         if config.dataset == 'ogbn-products':
             edge_index, _ = to_edge_index(data.edge_index)
             data.edge_index = edge_index
         
         train_loader, val_loader, test_loader = get_dataloader(data, config)
         
-        r=32
-        input_dim=4096 # 4096
+        r=config.r # used for dimensionality reduction
+        input_dim=config.input_dim # 4096
         k = int(input_dim/r)
         hidden = config.hidden_size
-        layer_select = [0,5,10,15,20,25,-1]
+        layer_select = config.layer_select
         encoders = {
             'GCN_Encoder': GCN_Encoder, 
             'GAT_Encoder': GAT_Encoder, 
@@ -271,7 +274,7 @@ if __name__ == '__main__':
         exit_list = [torch.nn.Linear(k*2, num_classes).to(device) for l in layer_select]
 
         classifier = torch.nn.Linear(k*2, num_classes).to(device)
-        T=0.1 # 0.1
+        T=config.T
         lr = config.lr
         weight_decay = config.weight_decay
         

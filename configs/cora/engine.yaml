@@ -1,0 +1,22 @@
+dataset: cora
+# model
+input_dim: 4096
+hidden_size: 64
+layer_num: 2
+activation: elu
+dropout: 0.5
+norm: id
+sampler: rw
+encoder: SAGE_Encoder
+r: 32
+T: 0.1
+layer_select: [0,5,10,15,20,25,-1]
+# training
+lr: 0.00005
+weight_decay: 0.0005
+epochs: 200
+earlystop: True
+patience: 20
+seeds: [25,131,148,404,353]
+
+
