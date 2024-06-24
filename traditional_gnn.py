@@ -78,7 +78,7 @@ def train_fullgraph(model, optimizer, criterion, config, data, device):
             val_acc = eval_fullgraph(model, data, device, config)
             if val_acc > best_val:
                 cnt = 0
-                best_test_fromval = eval_fullgraph(model, data, device, config)
+                best_test_fromval = eval_fullgraph(model, data, device, config, eval="test")
                 best_val = val_acc
             else:
                 cnt += 1
@@ -90,12 +90,18 @@ def train_fullgraph(model, optimizer, criterion, config, data, device):
     return best_test_fromval
 
 
-def eval_fullgraph(model, data, device, config):
+def eval_fullgraph(model, data, device, config, eval="valid"):
+    assert eval in ["valid", "test"]
     model.eval()
     data = data.to(device)
     pred = model(data.x, data.edge_index).argmax(dim=1)
-    correct = (pred[data.test_mask] == data.y[data.test_mask]).sum()
-    acc = int(correct) / int(data.test_mask.sum())
+    if eval == "test":
+        correct = (pred[data.test_mask] == data.y[data.test_mask]).sum()
+        total = int(data.test_mask.sum())
+    else:
+        correct = (pred[data.val_mask] == data.y[data.val_mask]).sum()
+        total = int(data.val_mask.sum())
+    acc = int(correct) / total
     return acc    
 
 def train_eval(model, optimizer, criterion, config, data, train_loader, val_loader, test_loader, device):
